@@ -1,0 +1,9 @@
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/Client.dir
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/edit_cache.dir
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/rebuild_cache.dir
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/list_install_components.dir
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/install.dir
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/install/local.dir
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/install/strip.dir
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/Client_autogen_timestamp_deps.dir
+/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/CMakeFiles/Client_autogen.dir

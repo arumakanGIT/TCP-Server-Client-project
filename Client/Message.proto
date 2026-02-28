@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+message Message{
+	int32 sender_id = 2;
+	int32 receiver_id = 3;
+	string text = 4;
+	string time = 5;
+}

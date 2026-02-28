@@ -1,0 +1,14 @@
+# ninja log v6
+398	2863	1772256905622712152	CMakeFiles/Client.dir/app.cpp.o	93bdae1336bb22d3
+398	3152	1772256905621587010	CMakeFiles/Client.dir/Client_autogen/mocs_compilation.cpp.o	291663b942ceb0bf
+3153	3280	1772256908376811075	Client	b0f40d43d4eec418
+398	2827	1772256905622976393	CMakeFiles/Client.dir/client.cpp.o	efdf677ace88d4d0
+1	397	1772256905615810991	Client_autogen/timestamp	c1351cba1e2205d7
+1	397	1772256905615810991	/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/Client_autogen/timestamp	c1351cba1e2205d7
+1	397	1772256905615810991	Client_autogen/mocs_compilation.cpp	c1351cba1e2205d7
+1	397	1772256905615810991	/home/arumakan/Documents/Qt/Project/TCP/Client/build/debug/Client_autogen/mocs_compilation.cpp	c1351cba1e2205d7
+400	2954	1772256905624198213	CMakeFiles/Client.dir/view.cpp.o	ec224f06d2449010
+399	1614	1772256905623845354	CMakeFiles/Client.dir/Message.pb.cc.o	ccca641a2e94d605
+399	2196	1772256905623484268	CMakeFiles/Client.dir/logger.cpp.o	b1b06d39e83563ed
+398	2554	1772256905621810991	CMakeFiles/Client.dir/main.cpp.o	534396fe36bcaaac
+399	2630	1772256905623250716	CMakeFiles/Client.dir/clientmanager.cpp.o	6d8374efb7150347
