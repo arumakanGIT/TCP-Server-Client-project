@@ -1,0 +1,12 @@
+*.pro.user
+*.user
+.qtcreator/
+build/
+release/
+debug/
+bin/
+*.o
+*.obj
+*.moc
+*.DS_Store
+Thumbs.db
