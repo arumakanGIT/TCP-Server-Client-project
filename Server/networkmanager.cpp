@@ -12,7 +12,7 @@ void NetworkManager::createServer(QString IP, quint16 port) {
     Server *server = new Server(m_app, "SERVER" + QString::number(id), this);
     server->startServer(QHostAddress(IP), port);
     server->setProperty("serverID", id);;
-
+    server->setId(id);
     servers.append(server);
 }
 

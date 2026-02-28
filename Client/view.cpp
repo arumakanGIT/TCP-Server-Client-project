@@ -50,13 +50,13 @@ void View::run() {
         if (match.hasMatch()) {
             emit logMessage(match.captured(1) + ":" + match.captured(2), 1);
 
-            if(m_app->getManager()->getClinet()->getSocketState() != QAbstractSocket::SocketState::ConnectedState)
+            if (m_app->getManager()->getClinet()->getSocketState() !=
+                QAbstractSocket::SocketState::ConnectedState)
                 continue;
 
-            emit logMessage("Test", 1);
-
             // create message class
-            Message msg;
+            packet::Message msg;
+            msg.set_message_type(packet::MESSAGE_TYPE_PACKET);
             msg.set_time(QTime::currentTime().toString().toStdString());
             msg.set_text(match.captured(2).toStdString());
             msg.set_receiver_id(match.captured(1).toInt());

@@ -20,10 +20,12 @@ PROTOBUF_PRAGMA_INIT_SEG
 namespace _pb = ::PROTOBUF_NAMESPACE_ID;
 namespace _pbi = _pb::internal;
 
+namespace packet {
 PROTOBUF_CONSTEXPR Message::Message(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.text_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.time_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.message_type_)*/0
   , /*decltype(_impl_.sender_id_)*/0
   , /*decltype(_impl_.receiver_id_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -36,38 +38,44 @@ struct MessageDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MessageDefaultTypeInternal _Message_default_instance_;
+}  // namespace packet
 static ::_pb::Metadata file_level_metadata_Message_2eproto[1];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_Message_2eproto = nullptr;
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Message_2eproto[1];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Message_2eproto = nullptr;
 
 const uint32_t TableStruct_Message_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Message, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::packet::Message, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Message, _impl_.sender_id_),
-  PROTOBUF_FIELD_OFFSET(::Message, _impl_.receiver_id_),
-  PROTOBUF_FIELD_OFFSET(::Message, _impl_.text_),
-  PROTOBUF_FIELD_OFFSET(::Message, _impl_.time_),
+  PROTOBUF_FIELD_OFFSET(::packet::Message, _impl_.message_type_),
+  PROTOBUF_FIELD_OFFSET(::packet::Message, _impl_.sender_id_),
+  PROTOBUF_FIELD_OFFSET(::packet::Message, _impl_.receiver_id_),
+  PROTOBUF_FIELD_OFFSET(::packet::Message, _impl_.text_),
+  PROTOBUF_FIELD_OFFSET(::packet::Message, _impl_.time_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::Message)},
+  { 0, -1, -1, sizeof(::packet::Message)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
-  &::_Message_default_instance_._instance,
+  &::packet::_Message_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_Message_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rMessage.proto\"M\n\007Message\022\021\n\tsender_id\030"
-  "\002 \001(\005\022\023\n\013receiver_id\030\003 \001(\005\022\014\n\004text\030\004 \001(\t"
-  "\022\014\n\004time\030\005 \001(\tb\006proto3"
+  "\n\rMessage.proto\022\006packet\"x\n\007Message\022)\n\014me"
+  "ssage_type\030\001 \001(\0162\023.packet.MessageType\022\021\n"
+  "\tsender_id\030\002 \001(\005\022\023\n\013receiver_id\030\003 \001(\005\022\014\n"
+  "\004text\030\004 \001(\t\022\014\n\004time\030\005 \001(\t*g\n\013MessageType"
+  "\022\036\n\032MESSAGE_TYPE_SET_CLIENT_ID\020\000\022\037\n\033MESS"
+  "AGE_TYPE_SEND_SERVER_ID\020\001\022\027\n\023MESSAGE_TYP"
+  "E_PACKET\020\002b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Message_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Message_2eproto = {
-    false, false, 102, descriptor_table_protodef_Message_2eproto,
+    false, false, 258, descriptor_table_protodef_Message_2eproto,
     "Message.proto",
     &descriptor_table_Message_2eproto_once, nullptr, 0, 1,
     schemas, file_default_instances, TableStruct_Message_2eproto::offsets,
@@ -80,6 +88,22 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_Message_
 
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_Message_2eproto(&descriptor_table_Message_2eproto);
+namespace packet {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MessageType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Message_2eproto);
+  return file_level_enum_descriptors_Message_2eproto[0];
+}
+bool MessageType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -91,7 +115,7 @@ Message::Message(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:Message)
+  // @@protoc_insertion_point(arena_constructor:packet.Message)
 }
 Message::Message(const Message& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
@@ -99,6 +123,7 @@ Message::Message(const Message& from)
   new (&_impl_) Impl_{
       decltype(_impl_.text_){}
     , decltype(_impl_.time_){}
+    , decltype(_impl_.message_type_){}
     , decltype(_impl_.sender_id_){}
     , decltype(_impl_.receiver_id_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -120,10 +145,10 @@ Message::Message(const Message& from)
     _this->_impl_.time_.Set(from._internal_time(), 
       _this->GetArenaForAllocation());
   }
-  ::memcpy(&_impl_.sender_id_, &from._impl_.sender_id_,
+  ::memcpy(&_impl_.message_type_, &from._impl_.message_type_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.receiver_id_) -
-    reinterpret_cast<char*>(&_impl_.sender_id_)) + sizeof(_impl_.receiver_id_));
-  // @@protoc_insertion_point(copy_constructor:Message)
+    reinterpret_cast<char*>(&_impl_.message_type_)) + sizeof(_impl_.receiver_id_));
+  // @@protoc_insertion_point(copy_constructor:packet.Message)
 }
 
 inline void Message::SharedCtor(
@@ -133,6 +158,7 @@ inline void Message::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.text_){}
     , decltype(_impl_.time_){}
+    , decltype(_impl_.message_type_){0}
     , decltype(_impl_.sender_id_){0}
     , decltype(_impl_.receiver_id_){0}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -148,7 +174,7 @@ inline void Message::SharedCtor(
 }
 
 Message::~Message() {
-  // @@protoc_insertion_point(destructor:Message)
+  // @@protoc_insertion_point(destructor:packet.Message)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -167,16 +193,16 @@ void Message::SetCachedSize(int size) const {
 }
 
 void Message::Clear() {
-// @@protoc_insertion_point(message_clear_start:Message)
+// @@protoc_insertion_point(message_clear_start:packet.Message)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   _impl_.text_.ClearToEmpty();
   _impl_.time_.ClearToEmpty();
-  ::memset(&_impl_.sender_id_, 0, static_cast<size_t>(
+  ::memset(&_impl_.message_type_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.receiver_id_) -
-      reinterpret_cast<char*>(&_impl_.sender_id_)) + sizeof(_impl_.receiver_id_));
+      reinterpret_cast<char*>(&_impl_.message_type_)) + sizeof(_impl_.receiver_id_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -186,6 +212,15 @@ const char* Message::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
+      // .packet.MessageType message_type = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_message_type(static_cast<::packet::MessageType>(val));
+        } else
+          goto handle_unusual;
+        continue;
       // int32 sender_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
@@ -208,7 +243,7 @@ const char* Message::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
           auto str = _internal_mutable_text();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Message.text"));
+          CHK_(::_pbi::VerifyUTF8(str, "packet.Message.text"));
         } else
           goto handle_unusual;
         continue;
@@ -218,7 +253,7 @@ const char* Message::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
           auto str = _internal_mutable_time();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Message.time"));
+          CHK_(::_pbi::VerifyUTF8(str, "packet.Message.time"));
         } else
           goto handle_unusual;
         continue;
@@ -247,9 +282,16 @@ failure:
 
 uint8_t* Message::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Message)
+  // @@protoc_insertion_point(serialize_to_array_start:packet.Message)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
+
+  // .packet.MessageType message_type = 1;
+  if (this->_internal_message_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_message_type(), target);
+  }
 
   // int32 sender_id = 2;
   if (this->_internal_sender_id() != 0) {
@@ -268,7 +310,7 @@ uint8_t* Message::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_text().data(), static_cast<int>(this->_internal_text().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Message.text");
+      "packet.Message.text");
     target = stream->WriteStringMaybeAliased(
         4, this->_internal_text(), target);
   }
@@ -278,7 +320,7 @@ uint8_t* Message::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_time().data(), static_cast<int>(this->_internal_time().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Message.time");
+      "packet.Message.time");
     target = stream->WriteStringMaybeAliased(
         5, this->_internal_time(), target);
   }
@@ -287,12 +329,12 @@ uint8_t* Message::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Message)
+  // @@protoc_insertion_point(serialize_to_array_end:packet.Message)
   return target;
 }
 
 size_t Message::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Message)
+// @@protoc_insertion_point(message_byte_size_start:packet.Message)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -311,6 +353,12 @@ size_t Message::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_time());
+  }
+
+  // .packet.MessageType message_type = 1;
+  if (this->_internal_message_type() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_message_type());
   }
 
   // int32 sender_id = 2;
@@ -336,7 +384,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Message::GetClassData() const 
 void Message::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
   auto* const _this = static_cast<Message*>(&to_msg);
   auto& from = static_cast<const Message&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:Message)
+  // @@protoc_insertion_point(class_specific_merge_from_start:packet.Message)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -346,6 +394,9 @@ void Message::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOB
   }
   if (!from._internal_time().empty()) {
     _this->_internal_set_time(from._internal_time());
+  }
+  if (from._internal_message_type() != 0) {
+    _this->_internal_set_message_type(from._internal_message_type());
   }
   if (from._internal_sender_id() != 0) {
     _this->_internal_set_sender_id(from._internal_sender_id());
@@ -357,7 +408,7 @@ void Message::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOB
 }
 
 void Message::CopyFrom(const Message& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Message)
+// @@protoc_insertion_point(class_specific_copy_from_start:packet.Message)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -383,9 +434,9 @@ void Message::InternalSwap(Message* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Message, _impl_.receiver_id_)
       + sizeof(Message::_impl_.receiver_id_)
-      - PROTOBUF_FIELD_OFFSET(Message, _impl_.sender_id_)>(
-          reinterpret_cast<char*>(&_impl_.sender_id_),
-          reinterpret_cast<char*>(&other->_impl_.sender_id_));
+      - PROTOBUF_FIELD_OFFSET(Message, _impl_.message_type_)>(
+          reinterpret_cast<char*>(&_impl_.message_type_),
+          reinterpret_cast<char*>(&other->_impl_.message_type_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Message::GetMetadata() const {
@@ -395,10 +446,11 @@ void Message::InternalSwap(Message* other) {
 }
 
 // @@protoc_insertion_point(namespace_scope)
+}  // namespace packet
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::Message*
-Arena::CreateMaybeMessage< ::Message >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Message >(arena);
+template<> PROTOBUF_NOINLINE ::packet::Message*
+Arena::CreateMaybeMessage< ::packet::Message >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::packet::Message >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

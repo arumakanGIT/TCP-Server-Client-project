@@ -24,16 +24,35 @@ int Server::getCounterServer() { return counterServer; }
 
 void Server::newClientConnected() {
     QTcpSocket *socket = server->nextPendingConnection();
-    socket->setProperty("clientID", counter); // How does Property Work?
+    socket->setProperty("clientID", counterClient); // How does Property Work?
     emit logMessage(LOG + "new Connection FROM " +
                         socket->peerAddress().toString() +
-                        ", Client ID = " + QString::number(counter),
+                        ", Client ID = " + QString::number(counterClient),
                     0);
-    sockets.insert(counter, socket);
-    socket->write(QByteArray::number(counter)); // send ID to client;
+    sockets.insert(counterClient, socket);
+    packet::Message msg;
+    msg.set_sender_id(this->getId());   // sender Id = server id
+    msg.set_receiver_id(counterClient); // receiver id = client id
+    msg.set_text(
+        QString::number(counterClient).toStdString()); // text = client id
+    msg.set_time(QTime::currentTime().toString().toStdString()); // time
+    msg.set_message_type(packet::MESSAGE_TYPE_SET_CLIENT_ID);    // message type
+
+    std::string serializatedData;
+    msg.SerializeToString(&serializatedData);
+
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+
+    quint32 payloadSizez = static_cast<quint32>(serializatedData.size());
+    out << payloadSizez;
+    out.writeRawData(serializatedData.data(), payloadSizez);
+
+    socket->write(block);
+    socket->flush();
     connect(socket, &QTcpSocket::disconnected, this, &Server::clientDisConnected);
     connect(socket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
-    counter++;
+    counterClient++;
 }
 
 void Server::clientDisConnected() {
@@ -42,9 +61,24 @@ void Server::clientDisConnected() {
                         QString::number(socket->property("clientID").toInt()) +
                         " Disconnected!",
                     0);
-    QByteArray data = server->serverAddress().toString().toUtf8() + "-" +
-                      QByteArray::number(server->serverPort());
-    socket->write(data);
+    packet::Message msg;
+    msg.set_message_type(packet::MESSAGE_TYPE_SEND_SERVER_ID);
+    msg.set_sender_id(this->getId());
+    msg.set_receiver_id(socket->property("clientID").toInt());
+    msg.set_text(QString::number(this->getId()).toStdString());
+    msg.set_time(QTime::currentTime().toString().toStdString());
+
+    std::string serializatedData;
+    msg.SerializeToString(&serializatedData);
+
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    quint32 payloadSize = serializatedData.size();
+
+    out << payloadSize;
+    out.writeRawData(serializatedData.data(), payloadSize);
+
+    socket->write(block);
 }
 
 void Server::startServer(QHostAddress hostAddress, quint16 port) {
@@ -78,7 +112,7 @@ void Server::onReadyRead() {
         return;
     }
 
-    Message msg;
+    packet::Message msg;
     if (msg.ParseFromArray(buffer.constData(), buffer.size())) {
         emit logMessage(QString::fromStdString(msg.time()) + ":Client" +
                             QString::number(msg.sender_id()) + ":Client" +
@@ -86,13 +120,16 @@ void Server::onReadyRead() {
                             QString::fromStdString(msg.text()),
                         1);
         emit logMessage(LOG + "Sending data to destination Client", 0);
-        QTcpSocket *targetSocket = sockets.take(msg.receiver_id());
+        QTcpSocket *targetSocket = sockets.value(msg.receiver_id());
         if (targetSocket) {
-            targetSocket->write(buffer);
+            QByteArray outBlock;
+            QDataStream out(&outBlock,QIODevice::WriteOnly);
+            out << static_cast<quint32>(buffer.size());
+            out.writeRawData(buffer.constData(), buffer.size());
+            targetSocket->write(outBlock);
             targetSocket->flush();
             emit logMessage(LOG + "data sent to target client", 0);
-        }
-        else
+        } else
             emit logMessage(LOG + "destination client dosn't exist", 0);
     } else
         emit logMessage("Receiving Message fail", 1);
@@ -115,4 +152,13 @@ QString Server::printServerState() {
     return text;
 }
 
-void Server::close() { server->close(); }
+void Server::close() {
+    server->close();
+    foreach (QTcpSocket *socket, sockets) {
+        socket->disconnectFromHost();
+    }
+}
+
+int Server::getId() const { return id; }
+
+void Server::setId(int newId) { id = newId; }

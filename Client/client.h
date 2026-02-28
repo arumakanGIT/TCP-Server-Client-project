@@ -27,7 +27,7 @@ public:
     QString clientStatus();
     int getId() const;
     QAbstractSocket::SocketState getSocketState();
-    void sendData(Message message);
+    void sendData(packet::Message message);
 
 private:
     // void hostFound();

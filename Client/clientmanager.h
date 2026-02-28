@@ -28,7 +28,7 @@ public slots:
     void disconnect();
     void clientStatus();
     void retry();
-    void sendData(Message message);
+    void sendData(packet::Message message);
 };
 
 #endif // CLIENTMANAGER_H

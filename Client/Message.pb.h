@@ -29,6 +29,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
@@ -44,17 +45,46 @@ struct TableStruct_Message_2eproto {
   static const uint32_t offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Message_2eproto;
+namespace packet {
 class Message;
 struct MessageDefaultTypeInternal;
 extern MessageDefaultTypeInternal _Message_default_instance_;
+}  // namespace packet
 PROTOBUF_NAMESPACE_OPEN
-template<> ::Message* Arena::CreateMaybeMessage<::Message>(Arena*);
+template<> ::packet::Message* Arena::CreateMaybeMessage<::packet::Message>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
+namespace packet {
 
+enum MessageType : int {
+  MESSAGE_TYPE_SET_CLIENT_ID = 0,
+  MESSAGE_TYPE_SEND_SERVER_ID = 1,
+  MESSAGE_TYPE_PACKET = 2,
+  MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool MessageType_IsValid(int value);
+constexpr MessageType MessageType_MIN = MESSAGE_TYPE_SET_CLIENT_ID;
+constexpr MessageType MessageType_MAX = MESSAGE_TYPE_PACKET;
+constexpr int MessageType_ARRAYSIZE = MessageType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MessageType_descriptor();
+template<typename T>
+inline const std::string& MessageType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, MessageType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function MessageType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    MessageType_descriptor(), enum_t_value);
+}
+inline bool MessageType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, MessageType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<MessageType>(
+    MessageType_descriptor(), name, value);
+}
 // ===================================================================
 
 class Message final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Message) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:packet.Message) */ {
  public:
   inline Message() : Message(nullptr) {}
   ~Message() override;
@@ -157,7 +187,7 @@ class Message final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Message";
+    return "packet.Message";
   }
   protected:
   explicit Message(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -176,6 +206,7 @@ class Message final :
   enum : int {
     kTextFieldNumber = 4,
     kTimeFieldNumber = 5,
+    kMessageTypeFieldNumber = 1,
     kSenderIdFieldNumber = 2,
     kReceiverIdFieldNumber = 3,
   };
@@ -207,6 +238,15 @@ class Message final :
   std::string* _internal_mutable_time();
   public:
 
+  // .packet.MessageType message_type = 1;
+  void clear_message_type();
+  ::packet::MessageType message_type() const;
+  void set_message_type(::packet::MessageType value);
+  private:
+  ::packet::MessageType _internal_message_type() const;
+  void _internal_set_message_type(::packet::MessageType value);
+  public:
+
   // int32 sender_id = 2;
   void clear_sender_id();
   int32_t sender_id() const;
@@ -225,7 +265,7 @@ class Message final :
   void _internal_set_receiver_id(int32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Message)
+  // @@protoc_insertion_point(class_scope:packet.Message)
  private:
   class _Internal;
 
@@ -235,6 +275,7 @@ class Message final :
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr text_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr time_;
+    int message_type_;
     int32_t sender_id_;
     int32_t receiver_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -253,6 +294,26 @@ class Message final :
 #endif  // __GNUC__
 // Message
 
+// .packet.MessageType message_type = 1;
+inline void Message::clear_message_type() {
+  _impl_.message_type_ = 0;
+}
+inline ::packet::MessageType Message::_internal_message_type() const {
+  return static_cast< ::packet::MessageType >(_impl_.message_type_);
+}
+inline ::packet::MessageType Message::message_type() const {
+  // @@protoc_insertion_point(field_get:packet.Message.message_type)
+  return _internal_message_type();
+}
+inline void Message::_internal_set_message_type(::packet::MessageType value) {
+  
+  _impl_.message_type_ = value;
+}
+inline void Message::set_message_type(::packet::MessageType value) {
+  _internal_set_message_type(value);
+  // @@protoc_insertion_point(field_set:packet.Message.message_type)
+}
+
 // int32 sender_id = 2;
 inline void Message::clear_sender_id() {
   _impl_.sender_id_ = 0;
@@ -261,7 +322,7 @@ inline int32_t Message::_internal_sender_id() const {
   return _impl_.sender_id_;
 }
 inline int32_t Message::sender_id() const {
-  // @@protoc_insertion_point(field_get:Message.sender_id)
+  // @@protoc_insertion_point(field_get:packet.Message.sender_id)
   return _internal_sender_id();
 }
 inline void Message::_internal_set_sender_id(int32_t value) {
@@ -270,7 +331,7 @@ inline void Message::_internal_set_sender_id(int32_t value) {
 }
 inline void Message::set_sender_id(int32_t value) {
   _internal_set_sender_id(value);
-  // @@protoc_insertion_point(field_set:Message.sender_id)
+  // @@protoc_insertion_point(field_set:packet.Message.sender_id)
 }
 
 // int32 receiver_id = 3;
@@ -281,7 +342,7 @@ inline int32_t Message::_internal_receiver_id() const {
   return _impl_.receiver_id_;
 }
 inline int32_t Message::receiver_id() const {
-  // @@protoc_insertion_point(field_get:Message.receiver_id)
+  // @@protoc_insertion_point(field_get:packet.Message.receiver_id)
   return _internal_receiver_id();
 }
 inline void Message::_internal_set_receiver_id(int32_t value) {
@@ -290,7 +351,7 @@ inline void Message::_internal_set_receiver_id(int32_t value) {
 }
 inline void Message::set_receiver_id(int32_t value) {
   _internal_set_receiver_id(value);
-  // @@protoc_insertion_point(field_set:Message.receiver_id)
+  // @@protoc_insertion_point(field_set:packet.Message.receiver_id)
 }
 
 // string text = 4;
@@ -298,7 +359,7 @@ inline void Message::clear_text() {
   _impl_.text_.ClearToEmpty();
 }
 inline const std::string& Message::text() const {
-  // @@protoc_insertion_point(field_get:Message.text)
+  // @@protoc_insertion_point(field_get:packet.Message.text)
   return _internal_text();
 }
 template <typename ArgT0, typename... ArgT>
@@ -306,11 +367,11 @@ inline PROTOBUF_ALWAYS_INLINE
 void Message::set_text(ArgT0&& arg0, ArgT... args) {
  
  _impl_.text_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Message.text)
+  // @@protoc_insertion_point(field_set:packet.Message.text)
 }
 inline std::string* Message::mutable_text() {
   std::string* _s = _internal_mutable_text();
-  // @@protoc_insertion_point(field_mutable:Message.text)
+  // @@protoc_insertion_point(field_mutable:packet.Message.text)
   return _s;
 }
 inline const std::string& Message::_internal_text() const {
@@ -325,7 +386,7 @@ inline std::string* Message::_internal_mutable_text() {
   return _impl_.text_.Mutable(GetArenaForAllocation());
 }
 inline std::string* Message::release_text() {
-  // @@protoc_insertion_point(field_release:Message.text)
+  // @@protoc_insertion_point(field_release:packet.Message.text)
   return _impl_.text_.Release();
 }
 inline void Message::set_allocated_text(std::string* text) {
@@ -340,7 +401,7 @@ inline void Message::set_allocated_text(std::string* text) {
     _impl_.text_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Message.text)
+  // @@protoc_insertion_point(field_set_allocated:packet.Message.text)
 }
 
 // string time = 5;
@@ -348,7 +409,7 @@ inline void Message::clear_time() {
   _impl_.time_.ClearToEmpty();
 }
 inline const std::string& Message::time() const {
-  // @@protoc_insertion_point(field_get:Message.time)
+  // @@protoc_insertion_point(field_get:packet.Message.time)
   return _internal_time();
 }
 template <typename ArgT0, typename... ArgT>
@@ -356,11 +417,11 @@ inline PROTOBUF_ALWAYS_INLINE
 void Message::set_time(ArgT0&& arg0, ArgT... args) {
  
  _impl_.time_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Message.time)
+  // @@protoc_insertion_point(field_set:packet.Message.time)
 }
 inline std::string* Message::mutable_time() {
   std::string* _s = _internal_mutable_time();
-  // @@protoc_insertion_point(field_mutable:Message.time)
+  // @@protoc_insertion_point(field_mutable:packet.Message.time)
   return _s;
 }
 inline const std::string& Message::_internal_time() const {
@@ -375,7 +436,7 @@ inline std::string* Message::_internal_mutable_time() {
   return _impl_.time_.Mutable(GetArenaForAllocation());
 }
 inline std::string* Message::release_time() {
-  // @@protoc_insertion_point(field_release:Message.time)
+  // @@protoc_insertion_point(field_release:packet.Message.time)
   return _impl_.time_.Release();
 }
 inline void Message::set_allocated_time(std::string* time) {
@@ -390,7 +451,7 @@ inline void Message::set_allocated_time(std::string* time) {
     _impl_.time_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Message.time)
+  // @@protoc_insertion_point(field_set_allocated:packet.Message.time)
 }
 
 #ifdef __GNUC__
@@ -399,6 +460,17 @@ inline void Message::set_allocated_time(std::string* time) {
 
 // @@protoc_insertion_point(namespace_scope)
 
+}  // namespace packet
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::packet::MessageType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::packet::MessageType>() {
+  return ::packet::MessageType_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

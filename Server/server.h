@@ -23,12 +23,16 @@ public:
     QString printServerState();
     void close();
 
+    int getId() const;
+    void setId(int newId);
+
 private:
     static int counterServer;
-    int counter = 1;
+    int counterClient = 1;
     QTcpServer *server;
     App *m_app;
     QHash<int, QTcpSocket *> sockets;
+    int id;
 
 signals:
     void logMessage(QString Message, int type);

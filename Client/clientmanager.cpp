@@ -20,7 +20,7 @@ void ClientManager::clientStatus() {
 
 void ClientManager::retry() { client->connectToServer(lastIP, lastPort); }
 
-void ClientManager::sendData(Message message)
+void ClientManager::sendData(packet::Message message)
 {
     client->sendData(message);
 }

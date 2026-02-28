@@ -50,6 +50,7 @@ template <> constexpr inline auto View::qt_create_metaobjectdata<qt_meta_tag_ZN4
         "type",
         "retryConnecting",
         "send",
+        "packet::Message",
         "message",
         "run"
     };
@@ -70,11 +71,11 @@ template <> constexpr inline auto View::qt_create_metaobjectdata<qt_meta_tag_ZN4
         // Signal 'retryConnecting'
         QtMocHelpers::SignalData<void()>(10, 2, QMC::AccessPublic, QMetaType::Void),
         // Signal 'send'
-        QtMocHelpers::SignalData<void(Message)>(11, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 8, 12 },
+        QtMocHelpers::SignalData<void(packet::Message)>(11, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 12, 13 },
         }}),
         // Slot 'run'
-        QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPublic, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPublic, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -103,7 +104,7 @@ void View::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         case 2: _t->clientStatus(); break;
         case 3: _t->logMessage((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<int>>(_a[2]))); break;
         case 4: _t->retryConnecting(); break;
-        case 5: _t->send((*reinterpret_cast<std::add_pointer_t<Message>>(_a[1]))); break;
+        case 5: _t->send((*reinterpret_cast<std::add_pointer_t<packet::Message>>(_a[1]))); break;
         case 6: _t->run(); break;
         default: ;
         }
@@ -119,7 +120,7 @@ void View::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
             return;
         if (QtMocHelpers::indexOfMethod<void (View::*)()>(_a, &View::retryConnecting, 4))
             return;
-        if (QtMocHelpers::indexOfMethod<void (View::*)(Message )>(_a, &View::send, 5))
+        if (QtMocHelpers::indexOfMethod<void (View::*)(packet::Message )>(_a, &View::send, 5))
             return;
     }
 }
@@ -186,7 +187,7 @@ void View::retryConnecting()
 }
 
 // SIGNAL 5
-void View::send(Message _t1)
+void View::send(packet::Message _t1)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 5, nullptr, _t1);
 }

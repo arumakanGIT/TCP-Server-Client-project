@@ -1,6 +1,15 @@
 syntax = "proto3";
 
+package packet;
+
+enum MessageType {
+  MESSAGE_TYPE_SET_CLIENT_ID = 0;
+  MESSAGE_TYPE_SEND_SERVER_ID = 1;
+  MESSAGE_TYPE_PACKET = 2;
+}
+
 message Message{
+    MessageType message_type = 1;
 	int32 sender_id = 2;
 	int32 receiver_id = 3;
 	string text = 4;

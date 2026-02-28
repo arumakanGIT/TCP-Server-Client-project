@@ -32,7 +32,7 @@ signals:
     void clientStatus();
     void logMessage(QString Message, int type);
     void retryConnecting();
-    void send(Message message);
+    void send(packet::Message message);
 
 public slots:
     void run();

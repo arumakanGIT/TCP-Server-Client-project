@@ -50,6 +50,7 @@ template <> constexpr inline auto ClientManager::qt_create_metaobjectdata<qt_met
         "clientStatus",
         "retry",
         "sendData",
+        "packet::Message",
         "message"
     };
 
@@ -69,8 +70,8 @@ template <> constexpr inline auto ClientManager::qt_create_metaobjectdata<qt_met
         // Slot 'retry'
         QtMocHelpers::SlotData<void()>(10, 2, QMC::AccessPublic, QMetaType::Void),
         // Slot 'sendData'
-        QtMocHelpers::SlotData<void(Message)>(11, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 3, 12 },
+        QtMocHelpers::SlotData<void(packet::Message)>(11, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 12, 13 },
         }}),
     };
     QtMocHelpers::UintData qt_properties {
@@ -100,7 +101,7 @@ void ClientManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 2: _t->disconnect(); break;
         case 3: _t->clientStatus(); break;
         case 4: _t->retry(); break;
-        case 5: _t->sendData((*reinterpret_cast<std::add_pointer_t<Message>>(_a[1]))); break;
+        case 5: _t->sendData((*reinterpret_cast<std::add_pointer_t<packet::Message>>(_a[1]))); break;
         default: ;
         }
     }

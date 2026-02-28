@@ -24,8 +24,7 @@ void Client::connectToServer(const QString &ip, quint16 port) {
 
 void Client::disconnectFromServer() { socket->disconnectFromHost(); }
 
-QString Client::clientStatus()
-{
+QString Client::clientStatus() {
     QString text = "\t\t--------------------------\n";
     QString name = " Client" + QString::number(id);
     if (id == 0)
@@ -58,17 +57,13 @@ void Client::errorHandler() {
     // connectToServer(lastIP, lastPort); });
 }
 
-int Client::getId() const
-{
-    return id;
-}
+int Client::getId() const { return id; }
 
-QAbstractSocket::SocketState Client::getSocketState()
-{
+QAbstractSocket::SocketState Client::getSocketState() {
     return socket->state();
 }
 
-void Client::sendData(Message message) {
+void Client::sendData(packet::Message message) {
     std::string serializatedData;
     message.SerializeToString(&serializatedData);
 
@@ -90,15 +85,40 @@ void Client::onConnected() {
 }
 
 void Client::onReadyRead() {
-    QString data = socket->readAll();
-    if (data.contains("-")) {
-        // QStringList d = data.split("-");
-        emit logMessage(LOG + "You disconnected FROM" + data, 1);
-    } else {
-        data = "Client" + data;
-        setObjectName(data);
-        emit logMessage(LOG + "Now You are " + data + "!", 1);
+    // QString data = socket->readAll();
+    QDataStream in(socket);
+    in.startTransaction();
+    quint32 payloadSize;
+    in >> payloadSize;
+    QByteArray buffer;
+    buffer.resize(payloadSize);
+
+    int byteRead = in.readRawData(buffer.data(), payloadSize);
+
+    if (byteRead != payloadSize || !in.commitTransaction()) {
+        emit logMessage(LOG + "Error while reading messager", 1);
+        return;
     }
+
+    packet::Message msg;
+    if (msg.ParseFromArray(buffer.constData(), buffer.size())) {
+        if (msg.message_type() == packet::MESSAGE_TYPE_PACKET) {
+            emit logMessage(QString::fromStdString(msg.time()) + ":Client" +
+                                QString::number(msg.sender_id()) + " : " +
+                                QString::fromStdString(msg.text()),
+                            0);
+        } else if (msg.message_type() == packet::MESSAGE_TYPE_SET_CLIENT_ID) {
+            QString data = "Client" + QString::number(msg.receiver_id());
+            setObjectName(data);
+            id = msg.receiver_id();
+            emit logMessage(LOG + "Now You are " + data + "!", 1);
+        } else {
+            emit logMessage(LOG + "You disconnected FROM" + " Server" +
+                                QString::number(msg.sender_id()),
+                            1);
+        }
+    } else
+        emit logMessage("Receiving Message fail", 1);
 }
 
 void Client::onDisconnected() { emit logMessage(LOG + "You Disconnected!", 1); }
